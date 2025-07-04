@@ -5,9 +5,8 @@ import string
 
 
 # Chargement du modèle
-
 model = joblib.load("../model/modele_registre.pkl")
-vectorizer = joblib.load("../model/vectorizer_tfidf.pkl")
+vectorizer = joblib.load("../model/vectorizer.pkl")
 
 
 def nettoyer_texte(texte):
@@ -18,8 +17,8 @@ def nettoyer_texte(texte):
 
 #  Fonction de prédiction
 def predire_registre(phrase):
-    phrase_clean = nettoyer_texte(phrase)
-    vect = vectorizer.transform([phrase_clean])
+    phrase_nette= nettoyer_texte(phrase)
+    vect = vectorizer.transform([phrase_nette])
     return model.predict(vect)[0]
 
 # Interface Streamlit
@@ -32,7 +31,7 @@ Veuillez entrer une phrase pour détécter sont registre :
 - **académique**
 """)
 
-user_input = st.text_area("✍️ Votre phrase ici :", height=100)
+user_input = st.text_area("Votre phrase ici :", height=100)
 
 if st.button(" Prédire le registre"):
     if user_input.strip() == "":
